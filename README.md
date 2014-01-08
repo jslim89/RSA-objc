@@ -13,6 +13,16 @@ Just drag the library _(with `include` & `lib` folders only)_ to the project. Go
 
 ## Generate Key pair
 
+Generate private key
 ```sh
-$ openssl rsa -in private_key.pem -pubout -out public_key.der -outform DER
+$ openssl genrsa -out private_key.pem 512
 ```
+
+Generate public key from private key
+```sh
+$ openssl rsa -in private_key.pem -pubout -out public_key.pem
+```
+
+## Credit
+
+* [openssl use RSA private key to generate public key?](

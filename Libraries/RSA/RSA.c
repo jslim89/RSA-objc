@@ -47,13 +47,13 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
     
     char *err = NULL;
     for (int i = 0; i < crypt_len; i += rsa_private_len) {
-        char crypt_chunk[rsa_private_len];
+        unsigned char *crypt_chunk = malloc(rsa_private_len + 1);
         memcpy(&crypt_chunk[0], &crypt[i], rsa_private_len);
         
         printf("Crypt chunk: %s\n", crypt_chunk);
         
-        char *result_chunk = malloc(crypt_len);
-        int result_length = RSA_private_decrypt(rsa_private_len, (unsigned char*)crypt_chunk, (unsigned char *)result_chunk, rsa_privateKey, RSA_PKCS1_PADDING);
+        unsigned char *result_chunk = malloc(crypt_len + 1);
+        int result_length = RSA_private_decrypt(rsa_private_len, crypt_chunk, result_chunk, rsa_privateKey, RSA_PKCS1_PADDING);
         // chunk length should be the size of privatekey (in bytes) minus 11 (overhead during encryption)
         printf("Result chunk: %s\nChunk length: %d\n", result_chunk, result_length);
         
@@ -65,7 +65,8 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
         // by copying the chunk to a temporary variable with an extra length (i.e. in this case is 54)
         // and then set the last character of temporary variable to NULL
         char tmp_result[result_length + 1];
-        strcpy(tmp_result, result_chunk);
+        // strcpy(tmp_result, result_chunk);
+        memcpy(tmp_result, result_chunk, result_length);
         tmp_result[result_length] = '\0';
         printf("New chunk: %s\n", tmp_result);
         
