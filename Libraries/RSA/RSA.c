@@ -100,32 +100,33 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     }
     fclose(fp_publicKey);
     
-    printf("Plain text: %s\n", plain_text);
-    
     rsa_public_len = RSA_size(rsa_publicKey);
     printf("RSA public length: %d\n", rsa_public_len);
-    
-    char cipher_char[1000];
-    // initialize
-    strcpy(cipher_char, "");
     
     // 11 bytes is overhead required for encryption
     int chunk_length = rsa_public_len - 11;
     // plain text length
     int plain_char_len = strlen(plain_text);
+    // calculate the number of chunks
+    int num_of_chunks = (strlen(plain_text) / chunk_length) + 1;
+    
+    int total_cipher_length = 0;
+    
+    // the output size is (total number of chunks) x (the key length)
+    unsigned char *cipher_data[(num_of_chunks * rsa_public_len) + 1];
     
     char *err = NULL;
     for (int i = 0; i < plain_char_len; i += chunk_length) {
         // take out chunk of plain text
-        char plain_chunk[chunk_length];
+        unsigned char *plain_chunk = malloc(chunk_length + 1);
         memcpy(&plain_chunk[0], &plain_text[i], chunk_length);
         
         printf("Plain chunk: %s\n", plain_chunk);
         
-        char *result_chunk = malloc(chunk_length);
+        unsigned char *result_chunk = malloc(rsa_public_len + 1);
         
-        int result_length = RSA_public_encrypt(chunk_length, (unsigned char*)plain_chunk, (unsigned char*)result_chunk, rsa_publicKey, RSA_PKCS1_PADDING);
-        printf("Result chunk: %s\nChunk length: %d\n", result_chunk, result_length);
+        int result_length = RSA_public_encrypt(chunk_length, plain_chunk, result_chunk, rsa_publicKey, RSA_PKCS1_PADDING);
+        printf("Encrypted Result chunk: %s\nEncrypted Chunk length: %d\n", result_chunk, result_length);
         
         if (result_length == -1) {
             ERR_load_CRYPTO_strings();
@@ -133,13 +134,15 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
             fprintf(stderr, "Error %s\n", err);
         }
         
-        strcat(cipher_char, result_chunk);
+        memcpy(&cipher_data[total_cipher_length], &result_chunk[0], result_length);
+        
+        total_cipher_length += result_length;
     }
     
     RSA_free(rsa_publicKey);
     size_t total_len = 0;
-    char *encrypted = base64_encode(cipher_char, strlen(cipher_char), &total_len);
-    printf("Final result: %s\n Final result length: %zu", encrypted, total_len);
+    char *encrypted = base64_encode(cipher_data, sizeof(cipher_data), &total_len);
+    printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
     
     return encrypted;
 }
