@@ -10,3 +10,9 @@ Just drag the library _(with `include` & `lib` folders only)_ to the project. Go
 
 * Look for **Header Search Paths**, add `"${SRCROOT}/Libraries/openssl/include"` for example
 * Look for **Library Search Paths**, add `"${SRCROOT}/Libraries/openssl/lib"` for example
+
+## Generate Key pair
+
+```sh
+$ openssl rsa -in private_key.pem -pubout -out public_key.der -outform DER
+```

@@ -10,5 +10,6 @@
 #define JS_RSA_h
 
 char *js_private_decrypt(const char *cipher_text, const char *private_key_path);
+char *js_public_encrypt(const char *plain_text, const char *public_key_path);
 
 #endif
