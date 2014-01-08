@@ -41,7 +41,7 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
     printf("Decoded cipher: %s\nCrypt length: %ld\n", crypt, crypt_len);
     
     // If no static, it will cause "address of stack memory associated with local variable ...", which mean the variable will released from memory after the end of this function
-    static char plain_char[200];
+    char *plain_char = malloc(crypt_len);
     // initialize
     strcpy(plain_char, "");
     
@@ -65,7 +65,6 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
         // by copying the chunk to a temporary variable with an extra length (i.e. in this case is 54)
         // and then set the last character of temporary variable to NULL
         char tmp_result[result_length + 1];
-        // strcpy(tmp_result, result_chunk);
         memcpy(tmp_result, result_chunk, result_length);
         tmp_result[result_length] = '\0';
         printf("New chunk: %s\n", tmp_result);
@@ -114,7 +113,8 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     int total_cipher_length = 0;
     
     // the output size is (total number of chunks) x (the key length)
-    unsigned char *cipher_data[(num_of_chunks * rsa_public_len) + 1];
+    int encrypted_size = (num_of_chunks * rsa_public_len);
+    unsigned char *cipher_data = malloc(encrypted_size + 1);
     
     char *err = NULL;
     for (int i = 0; i < plain_char_len; i += chunk_length) {
@@ -139,10 +139,11 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
         
         total_cipher_length += result_length;
     }
+    printf("Total cipher length: %d\n", total_cipher_length);
     
     RSA_free(rsa_publicKey);
     size_t total_len = 0;
-    char *encrypted = base64_encode(cipher_data, sizeof(cipher_data), &total_len);
+    char *encrypted = base64_encode(cipher_data, encrypted_size, &total_len);
     printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
     
     return encrypted;

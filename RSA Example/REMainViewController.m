@@ -11,7 +11,7 @@
 #import "REMainViewController.h"
 
 // the cipherText is encrypted from plainText (83 characters) value
-static NSString *plainText = @"This is a plain text with very very long characters to test the long bit encryption.";
+static NSString *plainText = @"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 static NSString *cipherText = @"bMUUisItkVcHeZsRbSrJ5TYOP+HwZWXuQ4T0PZ/5B9vTMpwbP/c4x378+5HefDQOM0WZh+6Lv46YvF28VdeMd2lkt5qE/tTGI7FXuPqwUebCSF7RrYAeICRnEa3ruMIo86WJxTglAF+Mf0zy/DmqM7NTEFVbF6xXBV72TWyMI8k=";
 
 @interface REMainViewController ()
