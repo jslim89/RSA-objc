@@ -1,0 +1,3 @@
+[submodule "Vendors/ios-openssl"]
+	path = Vendors/ios-openssl
+	url = https://github.com/st3fan/ios-openssl.git
