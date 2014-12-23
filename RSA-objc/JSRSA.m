@@ -22,7 +22,6 @@
     NSString *filename = [filenameChunks componentsJoinedByString:@"."]; // reconstruct the filename with no extension
         
     NSString *keyPath = [[NSBundle mainBundle] pathForResource:filename ofType:extension];
-    NSLog(@"publicKeyPath: %@", keyPath);
     
     return keyPath;
 }
@@ -37,7 +36,6 @@
     NSString *filename = [filenameChunks componentsJoinedByString:@"."]; // reconstruct the filename with no extension
         
     NSString *keyPath = [[NSBundle mainBundle] pathForResource:filename ofType:extension];
-    NSLog(@"privateKeyPath: %@", keyPath);
     
     return keyPath;
 }

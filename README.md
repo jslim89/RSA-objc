@@ -1,5 +1,5 @@
-# About
-This example is to perform RSA encryption & decryption in iOS _(Objective-C)_. I wrote a blog about [encryption](http://jslim.net/blog/2013/01/05/rsa-encryption-in-ios-and-decrypt-it-using-php/) and [decryption](http://jslim.net/blog/2013/06/24/rsa-decryption-on-ios/). Now I create this example is improvement on that _(In my blog post: Encryption is done totally in Objective-C; Decryption cannot support chunks decryption but written in C)_, This example shows both encryption & decryption in C and support for longer string.
+# RSA for Objective-C
+This is a plugin for RSA encryption & decryption in iOS _(Objective-C)_. I wrote a blog about [encryption](http://jslim.net/blog/2013/01/05/rsa-encryption-in-ios-and-decrypt-it-using-php/) and [decryption](http://jslim.net/blog/2013/06/24/rsa-decryption-on-ios/).
 
 ## Setup
 
@@ -14,7 +14,11 @@ Just drag the library _(with `include` & `lib` folders only)_ to the project. Go
 * Look for **Header Search Paths**, add `"${SRCROOT}/Libraries/openssl/include"` for example
 * Look for **Library Search Paths**, add `"${SRCROOT}/Libraries/openssl/lib"` for example
 
-## Generate Key pair
+### 3. Include RSA-objc into your project
+
+Drag the folder **RSA-objc** to your project.
+
+### 4. Generate Key pair
 
 Generate private key
 ```sh
@@ -26,32 +30,59 @@ Generate public key from private key
 $ openssl rsa -in private_key.pem -pubout -out public_key.pem
 ```
 
+Drag the key(s) to your project, and make sure it appear in **Copy Bundle Resources**.
+
+![alt text] (https://raw.github.com/jslim89/RSA-Example/master/screenshots/resource_bundle.png "Copy Bundle Resources")  
+
 ## How to use
 
 Include RSA
 ```obj-c
-#include "RSA.h"
+#import "JSRSA.h"
+
+// set the public/private key
+[JSRSA sharedInstance].publicKey = @"public_key.pem";
+[JSRSA sharedInstance].privateKey = @"private_key.pem";
+
+NSString *plainText = [[JSRSA sharedInstance] privateDecrypt:cipherText];
+...
 ```
 
-Get the path of your private key _(make sure is in **Copy Bundle Resources)_
-
-![alt text] (https://raw.github.com/jslim89/RSA-Example/master/screenshots/resource_bundle.png "Copy Bundle Resources")  
+There are 4 methods here:
 
 ```obj-c
-NSString *privateKeyPath = [[NSBundle mainBundle] pathForResource:@"private_key" ofType:@"pem"];
+- (NSString *)publicEncrypt:(NSString *)plainText;
+- (NSString *)privateDecrypt:(NSString *)cipherText;
+- (NSString *)privateEncrypt:(NSString *)plainText;
+- (NSString *)publicDecrypt:(NSString *)cipherText;
 ```
 
-Decrypt using the function `js_private_decrypt`
-```obj-c
-char *plainText = js_private_decrypt([cipher UTF8String], [privateKeyPath UTF8String]);
+## TODO
 
-// convert to NSString form
-NSString *result = [NSString stringWithUTF8String:plainText];
-NSLog(@"Plain text: %@", result);
+Currently, only `privateDecrypt:` work.
+
+If you are interested in this project, please fork it and submit a pull request here.
+
+Now these 3 method still in progress.
+
+- `publicEncrypt:`
+- `privateEncrypt:`
+- `publicDecrypt:`
+
+Thanks
+
+### Setup
+
+To pull the openssl for iOS
+
+```sh
+$ git submodule update --init --recursive
 ```
-
-**(NOTE: Encryption did the same way)**
 
 ## Credit
 
 * [openssl use RSA private key to generate public key?](http://stackoverflow.com/questions/5244129/openssl-use-rsa-private-key-to-generate-public-key/5246045#5246045)
+
+## License
+
+The RSA-objc is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
