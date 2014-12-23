@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4BF3B4161A49A7E3002ECFC5 /* Base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B4121A49A7E3002ECFC5 /* Base64.c */; };
-		4BF3B4171A49A7E3002ECFC5 /* RSA.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B4141A49A7E3002ECFC5 /* RSA.c */; };
+		4BF3B4161A49A7E3002ECFC5 /* js_base_64.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B4121A49A7E3002ECFC5 /* js_base_64.c */; };
+		4BF3B4171A49A7E3002ECFC5 /* js_rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B4141A49A7E3002ECFC5 /* js_rsa.c */; };
 		4BF3B4CD1A49AC1C002ECFC5 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF3B4C21A49AC1C002ECFC5 /* libcrypto.a */; };
 		4BF3B4CE1A49AC1C002ECFC5 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF3B4C31A49AC1C002ECFC5 /* libssl.a */; };
+		4BF3B4D71A49C1CC002ECFC5 /* JSRSA.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF3B4D61A49C1CC002ECFC5 /* JSRSA.m */; };
 		A3F0D2DF187B88E100AF0485 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3F0D2DE187B88E100AF0485 /* Foundation.framework */; };
 		A3F0D2E1187B88E100AF0485 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3F0D2E0187B88E100AF0485 /* CoreGraphics.framework */; };
 		A3F0D2E3187B88E100AF0485 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3F0D2E2187B88E100AF0485 /* UIKit.framework */; };
@@ -39,10 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4BF3B4121A49A7E3002ECFC5 /* Base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64.c; sourceTree = "<group>"; };
-		4BF3B4131A49A7E3002ECFC5 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
-		4BF3B4141A49A7E3002ECFC5 /* RSA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = RSA.c; sourceTree = "<group>"; };
-		4BF3B4151A49A7E3002ECFC5 /* RSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSA.h; sourceTree = "<group>"; };
+		4BF3B4121A49A7E3002ECFC5 /* js_base_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = js_base_64.c; sourceTree = "<group>"; };
+		4BF3B4131A49A7E3002ECFC5 /* js_base_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_base_64.h; sourceTree = "<group>"; };
+		4BF3B4141A49A7E3002ECFC5 /* js_rsa.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = js_rsa.c; sourceTree = "<group>"; };
+		4BF3B4151A49A7E3002ECFC5 /* js_rsa.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_rsa.h; sourceTree = "<group>"; };
 		4BF3B4761A49AC1B002ECFC5 /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		4BF3B4771A49AC1B002ECFC5 /* asn1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1.h; sourceTree = "<group>"; };
 		4BF3B4781A49AC1B002ECFC5 /* asn1_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1_mac.h; sourceTree = "<group>"; };
@@ -120,6 +121,8 @@
 		4BF3B4C01A49AC1C002ECFC5 /* x509v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x509v3.h; sourceTree = "<group>"; };
 		4BF3B4C21A49AC1C002ECFC5 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		4BF3B4C31A49AC1C002ECFC5 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		4BF3B4D51A49C1CC002ECFC5 /* JSRSA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSRSA.h; sourceTree = "<group>"; };
+		4BF3B4D61A49C1CC002ECFC5 /* JSRSA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSRSA.m; sourceTree = "<group>"; };
 		A3F0D2DB187B88E100AF0485 /* RSA Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RSA Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F0D2DE187B88E100AF0485 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A3F0D2E0187B88E100AF0485 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -179,10 +182,12 @@
 		4BF3B4111A49A7E3002ECFC5 /* RSA-objc */ = {
 			isa = PBXGroup;
 			children = (
-				4BF3B4121A49A7E3002ECFC5 /* Base64.c */,
-				4BF3B4131A49A7E3002ECFC5 /* Base64.h */,
-				4BF3B4141A49A7E3002ECFC5 /* RSA.c */,
-				4BF3B4151A49A7E3002ECFC5 /* RSA.h */,
+				4BF3B4121A49A7E3002ECFC5 /* js_base_64.c */,
+				4BF3B4131A49A7E3002ECFC5 /* js_base_64.h */,
+				4BF3B4141A49A7E3002ECFC5 /* js_rsa.c */,
+				4BF3B4151A49A7E3002ECFC5 /* js_rsa.h */,
+				4BF3B4D51A49C1CC002ECFC5 /* JSRSA.h */,
+				4BF3B4D61A49C1CC002ECFC5 /* JSRSA.m */,
 			);
 			path = "RSA-objc";
 			sourceTree = SOURCE_ROOT;
@@ -488,8 +493,9 @@
 				A3F0D369187B89CB00AF0485 /* REMainViewController.m in Sources */,
 				A3F0D2EB187B88E100AF0485 /* main.m in Sources */,
 				A3F0D2EF187B88E100AF0485 /* REAppDelegate.m in Sources */,
-				4BF3B4171A49A7E3002ECFC5 /* RSA.c in Sources */,
-				4BF3B4161A49A7E3002ECFC5 /* Base64.c in Sources */,
+				4BF3B4D71A49C1CC002ECFC5 /* JSRSA.m in Sources */,
+				4BF3B4171A49A7E3002ECFC5 /* js_rsa.c in Sources */,
+				4BF3B4161A49A7E3002ECFC5 /* js_base_64.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

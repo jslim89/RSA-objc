@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "Base64.h"
+#include "js_base_64.h"
 
 void build_decoding_table();
 

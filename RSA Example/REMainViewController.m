@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 JS Lim. All rights reserved.
 //
 
-#include "RSA.h"
+#import "JSRSA.h"
 
 #import "REMainViewController.h"
 
@@ -52,6 +52,9 @@ static NSString *cipherText = @"bMUUisItkVcHeZsRbSrJ5TYOP+HwZWXuQ4T0PZ/5B9vTMpwb
     [super viewDidLoad];
     
     self.navigationItem.title = @"RSA Encryption/Decryption";
+    
+    [JSRSA sharedInstance].publicKey = @"public_key.pem";
+    [JSRSA sharedInstance].privateKey = @"private_key.pem";
     
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -359,38 +362,14 @@ static NSString *cipherText = @"bMUUisItkVcHeZsRbSrJ5TYOP+HwZWXuQ4T0PZ/5B9vTMpwb
     // Dispose of any resources that can be recreated.
 }
 
-- (NSString *)decryptFromCipherText:(NSString *)cipher
-{
-    
-    NSString *privateKeyPath = [[NSBundle mainBundle] pathForResource:@"private_key" ofType:@"pem"];
-    NSLog(@"privateKeyPath: %@", privateKeyPath);
-    
-    char *plainText = js_private_decrypt([cipher UTF8String], [privateKeyPath UTF8String]);
-    printf("Plain plain: %s\n", plainText);
-    
-    return [NSString stringWithUTF8String:plainText];
-}
-
-- (NSString *)encryptFromPlainText:(NSString *)plain
-{
-    
-    NSString *publicKeyPath = [[NSBundle mainBundle] pathForResource:@"public_key" ofType:@"pem"];
-    NSLog(@"publicKeyPath: %@", publicKeyPath);
-    
-    char *cipherText = js_public_encrypt([plain UTF8String], [publicKeyPath UTF8String]);
-    printf("cipher : %s\n", cipherText);
-    
-    return [NSString stringWithUTF8String:cipherText];
-}
-
 - (void)publicEncryptTouched:(UIButton *)sender
 {
-    _publicEncryptOutputTextView.text = [self encryptFromPlainText:_publicEncryptInputTextView.text];
+    _publicEncryptOutputTextView.text = [[JSRSA sharedInstance] publicEncrypt:_publicEncryptInputTextView.text];
 }
 
 - (void)privateDecryptTouched:(UIButton *)sender
 {
-    _privateDecryptOutputTextView.text = [self decryptFromCipherText:_privateDecryptInputTextView.text];
+    _privateDecryptOutputTextView.text = [[JSRSA sharedInstance] privateDecrypt:_privateDecryptInputTextView.text];
 }
 
 - (void)privateEncryptTouched:(UIButton *)sender

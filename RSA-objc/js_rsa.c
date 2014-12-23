@@ -11,7 +11,7 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
-#include "Base64.h"
+#include "js_base_64.h"
 
 char *js_private_decrypt(const char *cipher_text, const char *private_key_path) {
     RSA *rsa_privateKey = NULL;
