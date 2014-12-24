@@ -20,6 +20,26 @@
     navigationController.navigationBar.translucent = NO;
     self.window.rootViewController = navigationController;
     
+    // style
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIFont fontWithName:@"HelveticaNeueLTStd-MdCn" size:17], UITextAttributeFont,
+                                                          [UIColor whiteColor], UITextAttributeTextColor,
+                                                          [UIColor clearColor], UITextAttributeTextShadowColor,
+                                                          nil]];
+    
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                          [UIFont fontWithName:@"HelveticaNeueLTStd-MdCn" size:16], UITextAttributeFont,
+                                                          [UIColor whiteColor], UITextAttributeTextColor,
+                                                          [UIColor clearColor], UITextAttributeTextShadowColor,
+                                                          nil] forState:UIControlStateNormal];
+    if (([[[UIDevice currentDevice] systemVersion] compare:@"7" options:NSNumericSearch] != NSOrderedAscending)) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+        
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    }
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

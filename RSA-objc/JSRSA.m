@@ -63,12 +63,22 @@
 
 - (NSString *)privateEncrypt:(NSString *)plainText
 {
-    return nil;
+    NSString *keyPath = [self privateKeyPath];
+    if (keyPath == nil) return nil;
+        
+    char *cipherText = js_private_encrypt([plainText UTF8String], [keyPath UTF8String]);
+    
+    return [NSString stringWithUTF8String:cipherText];
 }
 
 - (NSString *)publicDecrypt:(NSString *)cipherText
 {
-    return nil;
+    NSString *keyPath = [self publicKeyPath];
+    if (keyPath == nil) return nil;
+    
+    char *plainText = js_public_decrypt([cipherText UTF8String], [keyPath UTF8String]);
+    
+    return [NSString stringWithUTF8String:plainText];
 }
 
 #pragma mark - instance method

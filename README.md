@@ -57,21 +57,7 @@ There are 4 methods here:
 - (NSString *)publicDecrypt:(NSString *)cipherText;
 ```
 
-## TODO
-
-Currently, only `privateDecrypt:` work.
-
-If you are interested in this project, please fork it and submit a pull request here.
-
-Now these 3 method still in progress.
-
-- `publicEncrypt:`
-- `privateEncrypt:`
-- `publicDecrypt:`
-
-Thanks
-
-### Setup
+## Try the demo project
 
 To pull the openssl for iOS
 
