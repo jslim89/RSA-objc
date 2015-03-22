@@ -32,11 +32,24 @@ $ openssl rsa -in private_key.pem -pubout -out public_key.pem
 
 Drag the key(s) to your project, and make sure it appear in **Copy Bundle Resources**.
 
-![alt text] (https://raw.github.com/jslim89/RSA-Example/master/screenshots/resource_bundle.png "Copy Bundle Resources")  
+![alt text](https://raw.github.com/jslim89/RSA-Example/master/screenshots/resource_bundle.png "Copy Bundle Resources")  
+
+### 5. Add bridging header _(only if you want to port to Swift)_
+
+Go to **Project Targets** -> select **Build Settings**, look for **Objective-C Bridging Header**
+
+![alt text](https://raw.github.com/jslim89/RSA-Example/master/screenshots/bridging-header.png "Set bridging header")  
+
+Make sure you set the correct path according to your file structure.
+
+**The _SwiftBridgingHeader.h_ is included in this example**
 
 ## How to use
 
 Include RSA
+
+### Objective-C
+
 ```obj-c
 #import "JSRSA.h"
 
@@ -46,6 +59,15 @@ Include RSA
 
 NSString *plainText = [[JSRSA sharedInstance] privateDecrypt:cipherText];
 ...
+```
+
+### Swift
+
+```swift
+JSRSA.sharedInstance().privateKey = "private_key.pem"
+JSRSA.sharedInstance().publicKey = "public_key.pem"
+
+var plainText = JSRSA.sharedInstance().privateDecrypt(cipherText)
 ```
 
 There are 4 methods here:
