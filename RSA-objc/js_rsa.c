@@ -193,15 +193,21 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
     
     char *err = NULL;
     for (int i = 0; i < plain_char_len; i += chunk_length) {
+        // get the remaining character count from the plain text
+        int remaining_char_count = plain_char_len - i;
+        
+        // this len is the number of characters to encrypt, thus take the minimum between the chunk count & the remaining characters
+        // this must less than rsa_private_len - 11
+        int len = JSMIN(remaining_char_count, chunk_length);
+        unsigned char *plain_chunk = malloc(len + 1);
         // take out chunk of plain text
-        unsigned char *plain_chunk = malloc(chunk_length + 1);
-        memcpy(&plain_chunk[0], &plain_text[i], chunk_length);
+        memcpy(&plain_chunk[0], &plain_text[i], len);
         
         printf("Plain chunk: %s\n", plain_chunk);
         
         unsigned char *result_chunk = malloc(rsa_private_len + 1);
         
-        int result_length = RSA_private_encrypt(chunk_length, plain_chunk, result_chunk, rsa_privateKey, RSA_PKCS1_PADDING);
+        int result_length = RSA_private_encrypt(len, plain_chunk, result_chunk, rsa_privateKey, RSA_PKCS1_PADDING);
         printf("Encrypted Result chunk: %s\nEncrypted Chunk length: %d\n", result_chunk, result_length);
         
         if (result_length == -1) {
