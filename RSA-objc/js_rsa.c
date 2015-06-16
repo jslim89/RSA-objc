@@ -26,6 +26,7 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
     }
     
     if ((rsa_privateKey = PEM_read_RSAPrivateKey(fp_privateKey, NULL, NULL, NULL)) == NULL) {
+        fclose(fp_privateKey);
         printf("Error loading RSA Private Key File.");
         return '\0';
     }
@@ -59,6 +60,8 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
         // chunk length should be the size of privatekey (in bytes) minus 11 (overhead during encryption)
         printf("Result chunk: %s\nChunk length: %d\n", result_chunk, result_length);
         
+        free(crypt_chunk);
+        
         // this is to omit the dummy character behind
         // i.e. Result chunk: ABC-1234567-201308101427371250-abcdefghijklmnopqrstuv\240Z
         //      Chunk length: 53
@@ -71,6 +74,8 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
         tmp_result[result_length] = '\0';
         printf("New chunk: %s\n", tmp_result);
         
+        free(result_chunk);
+        
         if (result_length == -1) {
             ERR_load_CRYPTO_strings();
             fprintf(stderr, "Error %s\n", ERR_error_string(ERR_get_error(), err));
@@ -81,6 +86,7 @@ char *js_private_decrypt(const char *cipher_text, const char *private_key_path) 
     }
     
     RSA_free(rsa_privateKey);
+    free(crypt);
     printf("Final result: %s\n", plain_char);
     
     return plain_char;
@@ -97,6 +103,7 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     }
     
     if ((rsa_publicKey = PEM_read_RSA_PUBKEY(fp_publicKey, NULL, NULL, NULL)) == NULL) {
+        fclose(fp_publicKey);
         printf("Error loading RSA Public Key File.");
         return '\0';
     }
@@ -108,9 +115,9 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     // 11 bytes is overhead required for encryption
     int chunk_length = rsa_public_len - 11;
     // plain text length
-    int plain_char_len = strlen(plain_text);
+    int plain_char_len = (int)strlen(plain_text);
     // calculate the number of chunks
-    int num_of_chunks = (strlen(plain_text) / chunk_length) + 1;
+    int num_of_chunks = (int)(strlen(plain_text) / chunk_length) + 1;
     
     int total_cipher_length = 0;
     
@@ -139,6 +146,8 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
         printf("Plain char len: %d\n", i);
         printf("Encrypted Result chunk: %s\nEncrypted Chunk length: %d\n", result_chunk, result_length);
         
+        free(plain_chunk);
+        
         if (result_length == -1) {
             ERR_load_CRYPTO_strings();
             fprintf(stderr, "Error %s\n", ERR_error_string(ERR_get_error(), err));
@@ -148,6 +157,8 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
         memcpy(&cipher_data[total_cipher_length], &result_chunk[0], result_length);
         
         total_cipher_length += result_length;
+        
+        free(result_chunk);
     }
     printf("Total cipher length: %d\n", total_cipher_length);
     
@@ -155,6 +166,8 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     size_t total_len = 0;
     char *encrypted = base64_encode(cipher_data, encrypted_size, &total_len);
     printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
+    
+    free(cipher_data);
     
     return encrypted;
 }
@@ -170,6 +183,7 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
     }
     
     if ((rsa_privateKey = PEM_read_RSAPrivateKey(fp_privateKey, NULL, NULL, NULL)) == NULL) {
+        fclose(fp_privateKey);
         printf("Error loading RSA Private Key File.");
         return '\0';
     }
@@ -181,9 +195,9 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
     // 11 bytes is overhead required for encryption
     int chunk_length = rsa_private_len - 11;
     // plain text length
-    int plain_char_len = strlen(plain_text);
+    int plain_char_len = (int)strlen(plain_text);
     // calculate the number of chunks
-    int num_of_chunks = (strlen(plain_text) / chunk_length) + 1;
+    int num_of_chunks = (int)(strlen(plain_text) / chunk_length) + 1;
     
     int total_cipher_length = 0;
     
@@ -210,6 +224,8 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
         int result_length = RSA_private_encrypt(len, plain_chunk, result_chunk, rsa_privateKey, RSA_PKCS1_PADDING);
         printf("Encrypted Result chunk: %s\nEncrypted Chunk length: %d\n", result_chunk, result_length);
         
+        free(plain_chunk);
+        
         if (result_length == -1) {
             ERR_load_CRYPTO_strings();
             fprintf(stderr, "Error %s\n", ERR_error_string(ERR_get_error(), err));
@@ -219,6 +235,8 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
         memcpy(&cipher_data[total_cipher_length], &result_chunk[0], result_length);
         
         total_cipher_length += result_length;
+        
+        free(result_chunk);
     }
     printf("Total cipher length: %d\n", total_cipher_length);
     
@@ -226,6 +244,8 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
     size_t total_len = 0;
     char *encrypted = base64_encode(cipher_data, encrypted_size, &total_len);
     printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
+    
+    free(cipher_data);
     
     return encrypted;
 }
@@ -241,6 +261,7 @@ char *js_public_decrypt(const char *cipher_text, const char *public_key_path) {
     }
     
     if ((rsa_publicKey = PEM_read_RSA_PUBKEY(fp_publicKey, NULL, NULL, NULL)) == NULL) {
+        fclose(fp_publicKey);
         printf("Error loading RSA Public Key File.");
         return '\0';
     }
@@ -274,6 +295,8 @@ char *js_public_decrypt(const char *cipher_text, const char *public_key_path) {
         // chunk length should be the size of publickey (in bytes) minus 11 (overhead during encryption)
         printf("Result chunk: %s\nChunk length: %d\n", result_chunk, result_length);
         
+        free(crypt_chunk);
+        
         // this is to omit the dummy character behind
         // i.e. Result chunk: ABC-1234567-201308101427371250-abcdefghijklmnopqrstuv\240Z
         //      Chunk length: 53
@@ -286,6 +309,8 @@ char *js_public_decrypt(const char *cipher_text, const char *public_key_path) {
         tmp_result[result_length] = '\0';
         printf("New chunk: %s\n", tmp_result);
         
+        free(result_chunk);
+        
         if (result_length == -1) {
             ERR_load_CRYPTO_strings();
             fprintf(stderr, "Error %s\n", ERR_error_string(ERR_get_error(), err));
@@ -296,6 +321,7 @@ char *js_public_decrypt(const char *cipher_text, const char *public_key_path) {
     }
     
     RSA_free(rsa_publicKey);
+    free(crypt);
     printf("Final result: %s\n", plain_char);
     
     return plain_char;
