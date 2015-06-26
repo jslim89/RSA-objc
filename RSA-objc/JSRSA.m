@@ -48,7 +48,11 @@
         
     char *cipherText = js_public_encrypt([plainText UTF8String], [keyPath UTF8String]);
     
-    return [NSString stringWithUTF8String:cipherText];
+    NSString *cipherTextString = [NSString stringWithUTF8String:cipherText];
+    
+    free(cipherText);
+    
+    return cipherTextString;
 }
 
 - (NSString *)privateDecrypt:(NSString *)cipherText
@@ -58,7 +62,11 @@
     
     char *plainText = js_private_decrypt([cipherText UTF8String], [keyPath UTF8String]);
     
-    return [NSString stringWithUTF8String:plainText];
+    NSString *planTextString = [NSString stringWithUTF8String:plainText];
+    
+    free(plainText);
+    
+    return planTextString;
 }
 
 - (NSString *)privateEncrypt:(NSString *)plainText
@@ -68,7 +76,11 @@
         
     char *cipherText = js_private_encrypt([plainText UTF8String], [keyPath UTF8String]);
     
-    return [NSString stringWithUTF8String:cipherText];
+    NSString *cipherTextString = [NSString stringWithUTF8String:cipherText];
+    
+    free(cipherText);
+    
+    return cipherTextString;
 }
 
 - (NSString *)publicDecrypt:(NSString *)cipherText
@@ -78,7 +90,11 @@
     
     char *plainText = js_public_decrypt([cipherText UTF8String], [keyPath UTF8String]);
     
-    return [NSString stringWithUTF8String:plainText];
+    NSString *plainTextString = [NSString stringWithUTF8String:plainText];
+    
+    free(plainText);
+    
+    return plainTextString;
 }
 
 #pragma mark - instance method
