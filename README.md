@@ -87,6 +87,11 @@ To pull the openssl for iOS
 $ git submodule update --init --recursive
 ```
 
+## Contributors
+
+- [jslim89](https://github.com/jslim89) - Original author
+- [flexih](https://github.com/flexih)
+
 ## Credit
 
 * [openssl use RSA private key to generate public key?](http://stackoverflow.com/questions/5244129/openssl-use-rsa-private-key-to-generate-public-key/5246045#5246045)
