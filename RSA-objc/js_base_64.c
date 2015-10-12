@@ -24,13 +24,13 @@ static char *decoding_table = NULL;
 static int mod_table[] = {0, 2, 1};
 
 
-char *base64_encode(const unsigned char *data,
+unsigned char *base64_encode(const unsigned char *data,
                     size_t input_length,
                     size_t *output_length) {
     
     *output_length = 4 * ((input_length + 2) / 3);
     
-    char *encoded_data = malloc(*output_length);
+    unsigned char *encoded_data = malloc(*output_length);
     if (encoded_data == NULL) return NULL;
     
     for (int i = 0, j = 0; i < input_length;) {

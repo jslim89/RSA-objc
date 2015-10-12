@@ -9,7 +9,7 @@
 #ifndef JS_Base64_h
 #define JS_Base64_h
 
-char *base64_encode(const unsigned char *data,
+unsigned char *base64_encode(const unsigned char *data,
                     size_t input_length,
                     size_t *output_length);
 
