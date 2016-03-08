@@ -164,7 +164,7 @@ char *js_public_encrypt(const char *plain_text, const char *public_key_path) {
     
     RSA_free(rsa_publicKey);
     size_t total_len = 0;
-    char *encrypted = base64_encode(cipher_data, encrypted_size, &total_len);
+    char *encrypted = (char *)base64_encode(cipher_data, encrypted_size, &total_len);
     printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
     
     free(cipher_data);
@@ -242,7 +242,7 @@ char *js_private_encrypt(const char *plain_text, const char *private_key_path) {
     
     RSA_free(rsa_privateKey);
     size_t total_len = 0;
-    char *encrypted = base64_encode(cipher_data, encrypted_size, &total_len);
+    char *encrypted = (char *)base64_encode(cipher_data, encrypted_size, &total_len);
     printf("Final result: %s\n Final result length: %zu\n", encrypted, total_len);
     
     free(cipher_data);
