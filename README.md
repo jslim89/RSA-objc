@@ -97,6 +97,10 @@ $ git submodule update --init --recursive
 
 * [openssl use RSA private key to generate public key?](http://stackoverflow.com/questions/5244129/openssl-use-rsa-private-key-to-generate-public-key/5246045#5246045)
 
+## Donate
+
+<a href='https://pledgie.com/campaigns/31695'><img alt='Click here to lend your support to: RSA-objc and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/31695.png?skin_name=chrome' border='0' ></a>
+
 ## License
 
 The RSA-objc is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
