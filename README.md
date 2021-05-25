@@ -1,6 +1,13 @@
 # RSA for Objective-C
 This is a plugin for RSA encryption & decryption in iOS _(Objective-C)_. I wrote a blog about [encryption](http://jslim.net/blog/2013/01/05/rsa-encryption-in-ios-and-decrypt-it-using-php/) and [decryption](http://jslim.net/blog/2013/06/24/rsa-decryption-on-ios/).
 
+## Please don't use this anymore
+
+This project dependent on [ios-openssl](https://github.com/st3fan/ios-openssl) which has been archived, and the precompiled binaries also been removed.
+I already long time didn't touch on iOS project, thus I will not support anymore.
+
+Thanks
+
 ## Setup
 
 ### 1. Download openssl library
